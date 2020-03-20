@@ -11,6 +11,8 @@ public class PlayerController : /*extends*/ MonoBehaviour
      */
 
     public float speed;
+    public float height;
+    public float rotationSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +23,21 @@ public class PlayerController : /*extends*/ MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        RaycastHit data; 
+
+        if(Physics.Raycast(transform.position, -transform.up, out data))
+        {
+            print(data.normal);
+            //transform.Rotate(Quaternion.FromToRotation(transform.up, data.normal).eulerAngles);
+            transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * Quaternion.FromToRotation(transform.up, data.normal), Time.deltaTime*rotationSpeed);
+            
+            transform.position += transform.up * (height - data.distance);
+                //transform.position = Vector3.Slerp(transform.position, transform.up, t);
+
+            
+        }
+
         if (Input.GetKey("w"))
         {
             transform.position += transform.forward * speed * Time.deltaTime;
