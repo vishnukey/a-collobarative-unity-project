@@ -13,6 +13,7 @@ public class PlayerController : /*extends*/ MonoBehaviour
     public float speed;
     public float height;
     public float rotationSpeed;
+    public LayerMask groundMask;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,7 @@ public class PlayerController : /*extends*/ MonoBehaviour
 
         RaycastHit data; 
 
-        if(Physics.Raycast(transform.position, -transform.up, out data))
+        if(Physics.Raycast(transform.position, -transform.up, out data, Mathf.Infinity,groundMask))
         {
             print(data.normal);
             //transform.Rotate(Quaternion.FromToRotation(transform.up, data.normal).eulerAngles);
