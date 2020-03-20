@@ -6,6 +6,7 @@ public class Goal : MonoBehaviour
 {
 
     Material mat;
+    int i;
 
     // Start is called before the first frame update
     void Start()
@@ -16,19 +17,23 @@ public class Goal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Ball"))
+        i++;
+        if(other.CompareTag("Ball") || other.CompareTag("Pin"))
         {
             Destroy(other.gameObject);
             //mat.color = Color.green;
 
-            // You can re-use this block between calls rather than constructing a new one each time.
-            var block = new MaterialPropertyBlock();
+            if (i > 3)
+            {
+                // You can re-use this block between calls rather than constructing a new one each time.
+                var block = new MaterialPropertyBlock();
 
-            // You can look up the property by ID instead of the string to be more efficient.
-            block.SetColor("_BaseColor", Color.green);
+                // You can look up the property by ID instead of the string to be more efficient.
+                block.SetColor("_BaseColor", Color.green);
 
-            // You can cache a reference to the renderer to avoid searching for it.
-            GetComponent<Renderer>().SetPropertyBlock(block);
+                // You can cache a reference to the renderer to avoid searching for it.
+                GetComponent<Renderer>().SetPropertyBlock(block);
+            }
         }
     }
 
